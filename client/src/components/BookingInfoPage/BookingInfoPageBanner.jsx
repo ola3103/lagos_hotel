@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 const BookingInfoPageBanner = () => {
   return (
     <nav className="booking_info_page_banner">
-      <Link className="booking_info_page_banner_back_btn">
+      <Link to="/rooms" className="booking_info_page_banner_back_btn">
         <svg
           width="24"
           height="24"

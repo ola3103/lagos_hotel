@@ -3,7 +3,12 @@ const validator = require("validator")
 
 const bookingSchema = mongoose.Schema(
   {
-    nameOfCustomer: {
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    lastName: {
       type: String,
       required: true,
       trim: true,
@@ -17,6 +22,16 @@ const bookingSchema = mongoose.Schema(
         },
         message: (props) => `${props.value} is not a valid email`,
       },
+    },
+    phoneNumber: {
+      type: Number,
+      required: true,
+      maxLength: 11,
+    },
+    specialRequest: {
+      type: String,
+      required: true,
+      trim: true,
     },
     checkInDate: {
       type: Date,

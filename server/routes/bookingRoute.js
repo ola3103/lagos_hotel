@@ -4,6 +4,6 @@ const router = express.Router()
 const bookingController = require("../controllers/bookingController")
 
 router.post("/", bookingController.createBooking)
-router.get("/checkout-session", bookingController.getCheckoutSession)
+router.post("/checkout-session", bookingController.getCheckoutSession)
 
 module.exports = router

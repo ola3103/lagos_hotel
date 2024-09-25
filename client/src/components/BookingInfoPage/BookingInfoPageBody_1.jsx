@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useForm } from "react-hook-form"
 import { GlobalHotelContext } from "../../context/HotelContext"
 
@@ -10,8 +11,19 @@ const BookingInfoPageBody_1 = () => {
     formState: { errors },
   } = useForm()
 
-  const handleBookingForm = (data) => {
-    console.log(data)
+  const handleBookingForm = async (data) => {
+    const hotelBookingInfo = { ...hotelDateState, ...tripCartState, ...data }
+    console.log(hotelBookingInfo)
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5070/api/v1/booking/checkout-session",
+        { hotelBookingInfo }
+      )
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const isTermsAndConditionChecked = watch("termsAndCondition", false)
