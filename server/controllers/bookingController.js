@@ -1,6 +1,4 @@
-const stripe = require("stripe")(
-  "sk_test_51PwAUPKE1f9pkgLIXpUVPg2UJxUX0KlglXOZvdbkChsKojEInPnHwEirMTfAqIAliUQtKDiE6P5iEIWCyDItGPCd0095ULSE1i"
-)
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 const Booking = require("../models/bookingModel")
 
 exports.createBooking = async (req, res) => {
