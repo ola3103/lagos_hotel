@@ -12,7 +12,16 @@ const { errorController } = require("./controllers/errorController")
 
 app.use(express.json())
 
-app.use(cors())
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+)
+
+app.options("*", cors())
 
 app.use("/api/v1/room", roomRoute)
 app.use("/api/v1/booking", bookingRoute)

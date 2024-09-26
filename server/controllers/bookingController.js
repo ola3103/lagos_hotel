@@ -1,3 +1,6 @@
+const stripe = require("stripe")(
+  "sk_test_51PwAUPKE1f9pkgLIXpUVPg2UJxUX0KlglXOZvdbkChsKojEInPnHwEirMTfAqIAliUQtKDiE6P5iEIWCyDItGPCd0095ULSE1i"
+)
 const Booking = require("../models/bookingModel")
 
 exports.createBooking = async (req, res) => {
@@ -13,5 +16,32 @@ exports.createBooking = async (req, res) => {
 }
 
 exports.getCheckoutSession = async (req, res) => {
-  res.send("Get checkout session")
+  const { hotelBookingInfo } = req.body
+  console.log(hotelBookingInfo)
+
+  const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: hotelBookingInfo.name,
+            description: hotelBookingInfo.description,
+            images: [hotelBookingInfo.images[0]],
+          },
+          unit_amount: hotelBookingInfo.price * 100,
+        },
+        quantity: hotelBookingInfo.numberOfNights,
+      },
+    ],
+    payment_method_types: ["card"],
+    mode: "payment",
+    success_url: "http://localhost:5173/",
+    cancel_url: "http://localhost:5173/book-room",
+  })
+
+  console.log(session)
+
+  res.status(200).json({ status: "success", url: session.url })
+  // res.redirect(303, session.url)
 }

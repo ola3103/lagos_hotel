@@ -1,3 +1,4 @@
+import { format, differenceInDays } from "date-fns"
 import axios from "axios"
 import { useForm } from "react-hook-form"
 import { GlobalHotelContext } from "../../context/HotelContext"
@@ -11,8 +12,18 @@ const BookingInfoPageBody_1 = () => {
     formState: { errors },
   } = useForm()
 
+  const numberOfNights = differenceInDays(
+    hotelDateState.checkOutDate,
+    hotelDateState.checkInDate
+  )
+
   const handleBookingForm = async (data) => {
-    const hotelBookingInfo = { ...hotelDateState, ...tripCartState, ...data }
+    const hotelBookingInfo = {
+      ...hotelDateState,
+      ...tripCartState,
+      ...data,
+      numberOfNights,
+    }
     console.log(hotelBookingInfo)
 
     try {
@@ -21,6 +32,13 @@ const BookingInfoPageBody_1 = () => {
         { hotelBookingInfo }
       )
       console.log(response)
+
+      if (response.status === 200 && response.data.url) {
+        // Redirect to Stripe Checkout
+        window.location.href = response.data.url
+      } else {
+        console.error("Failed to create Stripe checkout session")
+      }
     } catch (error) {
       console.log(error)
     }
