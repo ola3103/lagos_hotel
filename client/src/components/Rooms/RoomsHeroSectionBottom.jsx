@@ -1,85 +1,15 @@
-import { DateRangePicker } from "react-date-range"
-import { addDays, format } from "date-fns"
-import { useState, useRef, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { GlobalHotelContext } from "../../context/HotelContext"
 
 const RoomsHeroSectionBottom = () => {
-  const [state, setState] = useState([
-    {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 0),
-      key: "selection",
-    },
-  ])
-
-  const formatDate = (date) => format(date, "MMM dd")
-
-  const [calenderState, setCalenderState] = useState(false)
-  const [noGuestState, setNoGuestState] = useState(false)
-  const [guestCount, setGuestCount] = useState(2)
-
   const { hotelDateState, setHotelDateState } = GlobalHotelContext()
-
-  const popupRef = useRef(null)
-  const calendarRef = useRef(null)
-  const noGuestRef = useRef(null)
-  const popupGuestRef = useRef(null)
-
-  const handleCalenderState = () => {
-    setCalenderState((currentState) => !currentState)
-  }
-
-  const handleNoGuestState = () => {
-    setNoGuestState((currentState) => !currentState)
-  }
-
-  const handleClickOutside = (event) => {
-    if (
-      (popupRef.current &&
-        !popupRef.current.contains(event.target) &&
-        calendarRef.current &&
-        !calendarRef.current.contains(event.target)) ||
-      (popupGuestRef.current &&
-        !popupGuestRef.current.contains(event.target) &&
-        noGuestRef.current &&
-        !noGuestRef.current.contains(event.target))
-    ) {
-      setCalenderState(false)
-      setNoGuestState(false)
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
-
-  const handleAddGuestCount = () => {
-    setGuestCount((currentState) => currentState + 1)
-    if (guestCount === 6) {
-      setGuestCount(guestCount)
-    }
-  }
-
-  const handleMinusGuestCount = () => {
-    setGuestCount((currentState) => currentState - 1)
-    if (guestCount === 1) {
-      setGuestCount(guestCount)
-    }
-  }
 
   return (
     <section className="room_hero_section_bottom">
       <div className="room_hero_section_bottom_container">
         <div className="room_hero_section_bottom_1">
           <p className="room_hero_section_bottom_1_top">YOUR DATES</p>
-          <button
-            className="room_hero_section_bottom_1_bottom"
-            onClick={handleCalenderState}
-            ref={popupRef}
-          >
+          <button className="room_hero_section_bottom_1_bottom">
             <p className="room_hero_section_bottom_1_bottom_1">
               <span className="room_hero_section_bottom_1_bottom_1_icon">
                 <svg
@@ -169,7 +99,6 @@ const RoomsHeroSectionBottom = () => {
             </p>
             <p className="room_hero_section_bottom_1_bottom_2">
               <span className="room_hero_section_bottom_1_bottom_2_1">
-                {/* {formatDate(state[0].startDate)} */}
                 {hotelDateState.checkInDate}
               </span>
               <span className="room_hero_section_bottom_1_bottom_2_2">
@@ -189,123 +118,10 @@ const RoomsHeroSectionBottom = () => {
                 </svg>
               </span>
               <span className="room_hero_section_bottom_1_bottom_2_3">
-                {/* {formatDate(state[0].endDate)} */}
                 {hotelDateState.checkOutDate}
               </span>
             </p>
           </button>
-          {calenderState && (
-            <div className="room_date_picker" ref={calendarRef}>
-              <DateRangePicker
-                onChange={(item) => setState([item.selection])}
-                showSelectionPreview={false}
-                moveRangeOnFirstSelection={false}
-                months={1}
-                minDate={addDays(new Date(), 0)}
-                maxDate={addDays(new Date(), 30)}
-                ranges={state}
-                scroll={{ enabled: true }}
-                direction="vertical"
-              />
-            </div>
-          )}
-        </div>
-        <div className="room_hero_section_bottom_2">
-          <p className="room_hero_section_bottom_2_top">NUMBER OF GUESTS</p>
-          <button
-            className="room_hero_section_bottom_2_bottom"
-            onClick={handleNoGuestState}
-            ref={popupGuestRef}
-          >
-            <p className="room_hero_section_bottom_2_bottom_1">
-              <span className="room_hero_section_bottom_2_bottom_1_icon">
-                <svg
-                  width="20"
-                  height="18"
-                  viewBox="0 0 20 18"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M10 8C11.933 8 13.5 6.433 13.5 4.5C13.5 2.567 11.933 1 10 1C8.067 1 6.5 2.567 6.5 4.5C6.5 6.433 8.067 8 10 8ZM10 9C12.4853 9 14.5 6.98528 14.5 4.5C14.5 2.01472 12.4853 0 10 0C7.51472 0 5.5 2.01472 5.5 4.5C5.5 6.98528 7.51472 9 10 9Z"
-                    fill="white"
-                  ></path>
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M3.36058 13.6207C2.07555 14.7839 1.57555 16.1661 1.4981 17.0439C1.47382 17.319 1.23116 17.5223 0.956084 17.4981C0.68101 17.4738 0.477694 17.2311 0.501966 16.9561C0.60098 15.8339 1.21274 14.2161 2.68948 12.8793C4.17641 11.5333 6.50821 10.5 10 10.5C13.4918 10.5 15.8237 11.5333 17.3106 12.8793C18.7873 14.2161 19.3991 15.8339 19.4981 16.9561C19.5224 17.2311 19.3191 17.4738 19.044 17.4981C18.7689 17.5223 18.5262 17.319 18.502 17.0439C18.4245 16.1661 17.9245 14.7839 16.6395 13.6207C15.3646 12.4667 13.2847 11.5 10 11.5C6.71538 11.5 4.63542 12.4667 3.36058 13.6207Z"
-                    fill="white"
-                  ></path>
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M0.5 17C0.5 16.7239 0.723858 16.5 1 16.5H19C19.2761 16.5 19.5 16.7239 19.5 17C19.5 17.2761 19.2761 17.5 19 17.5H1C0.723858 17.5 0.5 17.2761 0.5 17Z"
-                    fill="white"
-                  ></path>
-                </svg>
-              </span>
-              <span className="room_hero_section_bottom_2_bottom_1_text">
-                Sleeps
-              </span>
-            </p>
-            <p className="room_hero_section_bottom_2_bottom_2">
-              {guestCount} {guestCount === 1 ? "Guest" : "Guests"}
-            </p>
-          </button>
-          {noGuestState && (
-            <div className="no_guest_box" ref={noGuestRef}>
-              <p className="no_guest_text">Number of guests</p>
-              <div className="no_guest_btn">
-                <span
-                  className="no_guest_minus_btn"
-                  onClick={handleMinusGuestCount}
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="black"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M2.5 12C2.5 11.7239 2.72386 11.5 3 11.5L21 11.5C21.2761 11.5 21.5 11.7239 21.5 12C21.5 12.2761 21.2761 12.5 21 12.5L3 12.5C2.72386 12.5 2.5 12.2761 2.5 12Z"
-                      fill="black"
-                    ></path>
-                  </svg>
-                </span>
-                <span className="no_guest_number">{guestCount}</span>
-                <span
-                  className="no_guest_add_btn"
-                  onClick={handleAddGuestCount}
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="black"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M12 3.5C12.2761 3.5 12.5 3.72386 12.5 4L12.5 20C12.5 20.2761 12.2761 20.5 12 20.5C11.7239 20.5 11.5 20.2761 11.5 20L11.5 4C11.5 3.72386 11.7239 3.5 12 3.5Z"
-                      fill="black"
-                    ></path>
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M20.5 12C20.5 12.2761 20.2761 12.5 20 12.5L4 12.5C3.72386 12.5 3.5 12.2761 3.5 12C3.5 11.7239 3.72386 11.5 4 11.5L20 11.5C20.2761 11.5 20.5 11.7239 20.5 12Z"
-                      fill="black"
-                    ></path>
-                  </svg>
-                </span>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </section>

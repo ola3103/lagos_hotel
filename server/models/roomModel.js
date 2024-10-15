@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const roomSchema = mongoose.Schema(
   {
@@ -15,9 +15,6 @@ const roomSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    availableUnits: {
-      type: Number,
-    },
     images: {
       type: [String],
       default: [],
@@ -29,6 +26,7 @@ const roomSchema = mongoose.Schema(
     },
     isAvailable: {
       type: Boolean,
+      default: true,
       required: true,
     },
     description: {
@@ -41,8 +39,8 @@ const roomSchema = mongoose.Schema(
     },
   },
   { timestamps: true }
-);
+)
 
-const Room = mongoose.model("Room", roomSchema);
+const Room = mongoose.model("Room", roomSchema)
 
-module.exports = Room;
+module.exports = Room

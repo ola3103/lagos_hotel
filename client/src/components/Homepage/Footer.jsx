@@ -53,9 +53,10 @@ const Footer = () => {
           <li className="footer_link">CONTACT US</li>
           <li className="footer_link">FAQ</li>
         </ul>
-        <p className="footer_side_4">
-          &copy; Index_Zer0 [0] ALL RIGHTS RESERVED 2024
-        </p>
+        <div className="footer_side_4">
+          <p className="booking_info_page_footer_text_1">Powered by</p>
+          <p className="booking_info_page_footer_text_2">INDEX_ZER0</p>
+        </div>
       </div>
     </footer>
   )

@@ -4,6 +4,7 @@ import RoomDetailsBody from "../components/Room-Details/RoomDetailsBody"
 import RoomDetailsPreview from "../components/Room-Details/RoomDetailsPreview"
 import axios from "axios"
 import { useParams } from "react-router-dom"
+import BookingInfoPageFooter from "../components/Room-Details/RoomDetailsFooter"
 
 const RoomDetails = () => {
   const [singleRoom, setSingleRoom] = useState({})
@@ -37,6 +38,7 @@ const RoomDetails = () => {
         <RoomDetailsBanner roomName={singleRoom.name} />
         <RoomDetailsPreview roomImg={singleRoom.images} />
         <RoomDetailsBody room={singleRoom} />
+        <BookingInfoPageFooter />
       </div>
     </section>
   )

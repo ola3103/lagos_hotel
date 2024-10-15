@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
 import { format } from "date-fns"
 
 const HotelContext = createContext(null)
@@ -6,12 +6,33 @@ const HotelContext = createContext(null)
 const HotelProvider = ({ children }) => {
   const today = new Date()
 
-  const [hotelDateState, setHotelDateState] = useState({
-    checkInDate: format(today, "MMM d"),
-    checkOutDate: format(today, "MMM d"),
-  })
+  const getInitialDates = () => {
+    const storedDates = localStorage.getItem("hotelDateState")
+    return storedDates
+      ? JSON.parse(storedDates)
+      : {
+          checkInDate: format(today, "MMM d"),
+          checkOutDate: format(today, "MMM d"),
+        }
+  }
 
-  const [tripCartState, setTripCartState] = useState({})
+  const [hotelDateState, setHotelDateState] = useState(getInitialDates)
+
+  useEffect(() => {
+    localStorage.setItem("hotelDateState", JSON.stringify(hotelDateState))
+  }, [hotelDateState])
+
+  const getInitialCartState = () => {
+    const storedCart = localStorage.getItem("hotelCart")
+
+    return storedCart ? JSON.parse(storedCart) : null
+  }
+
+  const [tripCartState, setTripCartState] = useState(getInitialCartState)
+
+  useEffect(() => {
+    localStorage.setItem("hotelCart", JSON.stringify(tripCartState))
+  }, [tripCartState])
 
   return (
     <HotelContext.Provider

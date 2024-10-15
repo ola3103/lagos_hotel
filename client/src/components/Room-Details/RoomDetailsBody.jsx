@@ -1,70 +1,21 @@
-import { DateRangePicker } from "react-date-range"
-import { addDays, format } from "date-fns"
-import { useState, useRef, useEffect } from "react"
+import { GlobalHotelContext } from "../../context/HotelContext"
+import { differenceInDays } from "date-fns"
+import { useNavigate } from "react-router-dom"
 
 const RoomDetailsBody = ({ room }) => {
-  const [state, setState] = useState([
-    {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 0),
-      key: "selection",
-    },
-  ])
+  const { hotelDateState, setTripCartState } = GlobalHotelContext()
 
-  const formatDate = (date) => format(date, "MMM dd")
+  const navigate = useNavigate()
 
-  const [calenderState, setCalenderState] = useState(false)
-  const [noGuestState, setNoGuestState] = useState(false)
-  const [guestCount, setGuestCount] = useState(2)
+  const numberOfNights = differenceInDays(
+    hotelDateState.checkOutDate,
+    hotelDateState.checkInDate
+  )
 
-  const popupRef = useRef(null)
-  const calendarRef = useRef(null)
-  const noGuestRef = useRef(null)
-  const popupGuestRef = useRef(null)
-
-  const handleCalenderState = () => {
-    setCalenderState((currentState) => !currentState)
-  }
-
-  const handleNoGuestState = () => {
-    setNoGuestState((currentState) => !currentState)
-  }
-
-  const handleClickOutside = (event) => {
-    if (
-      (popupRef.current &&
-        !popupRef.current.contains(event.target) &&
-        calendarRef.current &&
-        !calendarRef.current.contains(event.target)) ||
-      (popupGuestRef.current &&
-        !popupGuestRef.current.contains(event.target) &&
-        noGuestRef.current &&
-        !noGuestRef.current.contains(event.target))
-    ) {
-      setCalenderState(false)
-      setNoGuestState(false)
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
-
-  const handleAddGuestCount = () => {
-    setGuestCount((currentState) => currentState + 1)
-    if (guestCount === 6) {
-      setGuestCount(guestCount)
-    }
-  }
-
-  const handleMinusGuestCount = () => {
-    setGuestCount((currentState) => currentState - 1)
-    if (guestCount === 1) {
-      setGuestCount(guestCount)
-    }
+  const handleBookTripBtn = () => {
+    setTripCartState(room)
+    navigate("/your-info")
+    console.log(room)
   }
 
   return (
@@ -164,11 +115,7 @@ const RoomDetailsBody = ({ room }) => {
         <div className="room_details_body_2_1_line"></div>
         <div className="room_details_body_2_2">
           <p className="room_details_body_2_2_1">YOUR DATES</p>
-          <button
-            className="room_details_body_2_2_2"
-            onClick={handleCalenderState}
-            ref={popupRef}
-          >
+          <button className="room_details_body_2_2_2">
             <p className="room_details_body_2_2_2_1">
               <svg
                 className="room_details_body_2_2_2_1_1"
@@ -255,7 +202,7 @@ const RoomDetailsBody = ({ room }) => {
             </p>
             <p className="room_details_body_2_2_2_2">
               <span className="room_details_body_2_2_2_2_1">
-                {formatDate(state[0].startDate)}
+                {hotelDateState.checkInDate}
               </span>
               <svg
                 className="room_details_body_2_2_2_2_2"
@@ -273,18 +220,14 @@ const RoomDetailsBody = ({ room }) => {
                 />
               </svg>
               <span className="room_details_body_2_2_2_2_3">
-                {formatDate(state[0].endDate)}
+                {hotelDateState.checkOutDate}
               </span>
             </p>
           </button>
         </div>
         <div className="room_details_body_2_3">
           <p className="room_details_body_2_3_1">NUMBER OF GUESTS</p>
-          <button
-            className="room_details_body_2_3_2"
-            onClick={handleNoGuestState}
-            ref={popupGuestRef}
-          >
+          <button className="room_details_body_2_3_2">
             <p className="room_details_body_2_3_2_1">
               <svg
                 className="room_details_body_2_3_2_1_1"
@@ -315,77 +258,25 @@ const RoomDetailsBody = ({ room }) => {
               </svg>
               <span className="room_details_body_2_3_2_1_2">Sleeps</span>
             </p>
-            <p className="room_details_body_2_3_2_2">
-              {guestCount} {guestCount === 1 ? "Guest" : "Guests"}
-            </p>
+            <p className="room_details_body_2_3_2_2">Guest</p>
           </button>
-          {noGuestState && (
-            <div className="no_guest_box" ref={noGuestRef}>
-              <p className="no_guest_text">Number of guests</p>
-              <div className="no_guest_btn">
-                <span
-                  className="no_guest_minus_btn"
-                  onClick={handleMinusGuestCount}
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="black"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M2.5 12C2.5 11.7239 2.72386 11.5 3 11.5L21 11.5C21.2761 11.5 21.5 11.7239 21.5 12C21.5 12.2761 21.2761 12.5 21 12.5L3 12.5C2.72386 12.5 2.5 12.2761 2.5 12Z"
-                      fill="black"
-                    ></path>
-                  </svg>
-                </span>
-                <span className="no_guest_number">{guestCount}</span>
-                <span
-                  className="no_guest_add_btn"
-                  onClick={handleAddGuestCount}
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="black"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M12 3.5C12.2761 3.5 12.5 3.72386 12.5 4L12.5 20C12.5 20.2761 12.2761 20.5 12 20.5C11.7239 20.5 11.5 20.2761 11.5 20L11.5 4C11.5 3.72386 11.7239 3.5 12 3.5Z"
-                      fill="black"
-                    ></path>
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M20.5 12C20.5 12.2761 20.2761 12.5 20 12.5L4 12.5C3.72386 12.5 3.5 12.2761 3.5 12C3.5 11.7239 3.72386 11.5 4 11.5L20 11.5C20.2761 11.5 20.5 11.7239 20.5 12Z"
-                      fill="black"
-                    ></path>
-                  </svg>
-                </span>
-              </div>
-            </div>
-          )}
         </div>
         <div className="room_details_body_2_4">
           <p className="room_details_body_2_4_1">No of Nights</p>
-          <p className="room_details_body_2_4_2">3</p>
+          <p className="room_details_body_2_4_2">{numberOfNights}</p>
         </div>
         <div className="room_details_body_2_5">
           <p className="room_details_body_2_5_1">PRICE PER NIGHT</p>
-          <p className="room_details_body_2_5_2">$132</p>
+          <p className="room_details_body_2_5_2">${room.price}</p>
         </div>
         <div className="room_details_body_2_6">
           <p className="room_details_body_2_6_1">TOTAL</p>
-          <p className="room_details_body_2_6_2">$396</p>
+          <p className="room_details_body_2_6_2">
+            ${room.price * numberOfNights}
+          </p>
         </div>
-        <button className="room_details_body_2_7">
-          <p className="room_details_body_2_7_1"> ADD TO TRIP</p>
+        <button onClick={handleBookTripBtn} className="room_details_body_2_7">
+          <p className="room_details_body_2_7_1"> BOOK NOW</p>
         </button>
       </div>
     </div>

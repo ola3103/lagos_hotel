@@ -21,17 +21,19 @@ const HomePage = () => {
 
   return (
     <>
-      <TopBanner />
-      <HeroSection />
-      <HeroSectionBottom
-        popUpState={popUpState}
-        setPopUpState={setPopUpState}
-      />
-      <SectionOne />
-      <SectionTwo />
-      <SectionThree />
-      <SectionFour />
-      <Footer />
+      <section className="homepage">
+        <TopBanner />
+        <HeroSection />
+        <HeroSectionBottom
+          popUpState={popUpState}
+          setPopUpState={setPopUpState}
+        />
+        <SectionOne />
+        <SectionTwo />
+        <SectionThree />
+        <SectionFour />
+        <Footer />
+      </section>
     </>
   )
 }
