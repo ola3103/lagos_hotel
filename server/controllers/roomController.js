@@ -34,10 +34,40 @@ exports.createRoom = async (req, res) => {
 }
 
 exports.getAllRoom = async (req, res) => {
-  const room = await Room.find({})
-  res
-    .status(200)
-    .json({ status: "success", totalRoom: room.length, data: room })
+  const { checkInDate, checkOutDate } = req.query
+
+  const checkIn = new Date(checkInDate)
+  const checkOut = new Date(checkOutDate)
+
+  const bookedUnits = await RoomUnit.find({
+    bookings: {
+      $elemMatch: {
+        checkInDate: { $lt: checkOut },
+        checkOutDate: { $gt: checkIn },
+      },
+    },
+  })
+
+  const bookedRoomCount = bookedUnits.reduce((acc, unit) => {
+    acc[unit.room] = (acc[unit.room] || 0) + 1
+    return acc
+  }, {})
+
+  const rooms = await Room.find({})
+
+  const availableRooms = rooms.map((room) => {
+    const bookedUnitsForRoom = bookedRoomCount[room._id] || 0
+    return {
+      ...room.toObject(),
+      availableUnits: room.totalUnits - bookedUnitsForRoom,
+    }
+  })
+
+  res.status(200).json({
+    status: "success",
+    totalRoom: availableRooms.length,
+    data: availableRooms,
+  })
 }
 
 exports.getSingleRoom = async (req, res) => {

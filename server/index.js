@@ -8,6 +8,7 @@ const cors = require("cors")
 
 const roomRoute = require("./routes/roomRoute")
 const bookingRoute = require("./routes/bookingRoute")
+const roomUnitRoute = require("./routes/roomUnitRoute")
 const { errorController } = require("./controllers/errorController")
 
 app.use(express.json())
@@ -25,6 +26,7 @@ app.options("*", cors())
 
 app.use("/api/v1/room", roomRoute)
 app.use("/api/v1/booking", bookingRoute)
+app.use("/api/v1/roomUnit", roomUnitRoute)
 app.use(errorController)
 app.all("*", (req, res) => {
   res
