@@ -27,8 +27,9 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
         checkInDate: format(state[0].startDate, "MMM d"),
         checkOutDate: format(state[0].endDate, "MMM d"),
       })
-      // setHasChooseDate(true)
       navigate("/rooms")
+      console.log("worked")
+      // setHasChooseDate(true)
     } else {
       setPopUpState(true)
       navigate("/")
