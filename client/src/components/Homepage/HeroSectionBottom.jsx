@@ -29,19 +29,18 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
       })
       navigate("/rooms")
       console.log("worked")
-      // setHasChooseDate(true)
+      setHasChooseDate(true)
     } else {
       setPopUpState(true)
-      navigate("/")
       console.log("Check-out date must be later than check-in date.")
     }
   }
 
-  // useEffect(() => {
-  //   if (hasChooseDate) {
-  //     navigate("/rooms")
-  //   }
-  // }, [hasChooseDate, navigate])
+  useEffect(() => {
+    if (hasChooseDate) {
+      navigate("/rooms")
+    }
+  }, [hasChooseDate, navigate])
 
   return (
     <div className="hero_sec_bottom_main">
