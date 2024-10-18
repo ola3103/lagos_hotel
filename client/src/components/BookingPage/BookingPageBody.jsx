@@ -28,7 +28,7 @@ const BookingPageBody = () => {
         checkInDate: format(startDate, "MMM d"),
         checkOutDate: format(endDate, "MMM d"),
       })
-      setHasChooseDate(true)
+      // setHasChooseDate(true)
       navigate("/rooms")
     } else {
       console.log("Check-out date must be later than check-in date.")

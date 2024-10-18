@@ -30,7 +30,6 @@ const RoomsBodySection = () => {
       console.log(error)
     }
   }
-  console.log(import.meta.env.VITE_API_BASE_URL_PROD)
 
   console.log(rooms)
 

@@ -12,15 +12,16 @@ const SingleRoom = ({ room }) => {
 
   const handleBookTripBtn = () => {
     setTripCartState(room)
-    setHasBookedRoom(true)
+    // setHasBookedRoom(true)
+    navigate("/your-info")
     console.log(room)
   }
 
-  useEffect(() => {
-    if (hasBookedRoom) {
-      navigate("/your-info")
-    }
-  }, [hasBookedRoom, navigate])
+  // useEffect(() => {
+  //   if (hasBookedRoom) {
+  //     navigate("/your-info")
+  //   }
+  // }, [hasBookedRoom, navigate])
 
   return (
     <div className="single_room_container">

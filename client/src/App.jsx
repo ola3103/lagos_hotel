@@ -15,21 +15,21 @@ import {
 function App() {
   return (
     <>
-      <ScrollToTop>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/book-room" element={<BookingPage />} />
-          <Route path="/the-lagos-bar" element={<LagosBar />} />
-          <Route element={<ProtectedRoomRoute />}>
-            <Route path="/rooms" element={<Rooms />} />
-          </Route>
-          <Route path="/room-details/:roomId" element={<RoomDetails />} />
-          <Route element={<ProtectBookingFormInfoRoute />}>
-            <Route path="/your-info" element={<BookingInfoPage />} />
-          </Route>
-          <Route path="/payment-successful" element={<PaymentSuccessPage />} />
-        </Routes>
-      </ScrollToTop>
+      {/* <ScrollToTop> */}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/book-room" element={<BookingPage />} />
+        <Route path="/the-lagos-bar" element={<LagosBar />} />
+        <Route element={<ProtectedRoomRoute />}>
+          <Route path="/rooms" element={<Rooms />} />
+        </Route>
+        <Route path="/room-details/:roomId" element={<RoomDetails />} />
+        <Route element={<ProtectBookingFormInfoRoute />}>
+          <Route path="/your-info" element={<BookingInfoPage />} />
+        </Route>
+        <Route path="/payment-successful" element={<PaymentSuccessPage />} />
+      </Routes>
+      {/* </ScrollToTop> */}
     </>
   )
 }
