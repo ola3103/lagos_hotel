@@ -18,7 +18,9 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
     },
   ])
 
-  const { hasChooseDate, setHasChooseDate } = UseAccess()
+  const [hasChooseDate, setHasChooseDate] = useState(false)
+
+  // const { hasChooseDate, setHasChooseDate } = UseAccess()
   const { hotelDateState, setHotelDateState } = GlobalHotelContext()
 
   const handleHomepageBooking = () => {
