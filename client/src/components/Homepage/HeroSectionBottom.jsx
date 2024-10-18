@@ -41,7 +41,7 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
     if (hasChooseDate) {
       navigate("/rooms")
     }
-  }, [hasChooseDate, navigate])
+  }, [hasChooseDate])
 
   return (
     <div className="hero_sec_bottom_main">
