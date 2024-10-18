@@ -81,10 +81,3 @@ exports.getSingleRoom = async (req, res) => {
 
   res.status(200).json({ status: "success", room })
 }
-
-exports.updateRoom = async (req, res) => {
-  const { id } = req.params
-
-  const room = await Room.findOne({ _id: id })
-  res.status(200).json({ status: "success", room })
-}

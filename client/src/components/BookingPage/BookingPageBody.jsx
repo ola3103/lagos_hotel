@@ -2,9 +2,10 @@ import "react-date-range/dist/styles.css"
 import "react-date-range/dist/theme/default.css"
 import { DateRangePicker } from "react-date-range"
 import { addDays, format, isSameDay } from "date-fns"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { GlobalHotelContext } from "../../context/HotelContext"
+import { UseAccess } from "../../context/AccessContext"
 
 const BookingPageBody = () => {
   const [state, setState] = useState([
@@ -18,6 +19,7 @@ const BookingPageBody = () => {
   const navigate = useNavigate()
 
   const { hotelDateState, setHotelDateState } = GlobalHotelContext()
+  const { hasChooseDate, setHasChooseDate } = UseAccess()
 
   const handleBookingRoomBtn = () => {
     const { startDate, endDate } = state[0]
@@ -26,7 +28,7 @@ const BookingPageBody = () => {
         checkInDate: format(startDate, "MMM d"),
         checkOutDate: format(endDate, "MMM d"),
       })
-      console.log(hotelDateState)
+      setHasChooseDate(true)
       navigate("/rooms")
     } else {
       console.log("Check-out date must be later than check-in date.")
@@ -34,8 +36,6 @@ const BookingPageBody = () => {
   }
 
   const isSameDate = isSameDay(state[0].startDate, state[0].endDate)
-
-  console.log(isSameDate)
 
   const renderDateRangePicker = (direction, months) => {
     return (

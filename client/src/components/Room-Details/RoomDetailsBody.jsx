@@ -1,9 +1,12 @@
 import { GlobalHotelContext } from "../../context/HotelContext"
 import { differenceInDays } from "date-fns"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { UseAccess } from "../../context/AccessContext"
 
 const RoomDetailsBody = ({ room }) => {
   const { hotelDateState, setTripCartState } = GlobalHotelContext()
+  const { hasBookedRoom, setHasBookedRoom } = UseAccess()
 
   const navigate = useNavigate()
 
@@ -14,6 +17,7 @@ const RoomDetailsBody = ({ room }) => {
 
   const handleBookTripBtn = () => {
     setTripCartState(room)
+    setHasBookedRoom(true)
     navigate("/your-info")
     console.log(room)
   }
@@ -67,33 +71,6 @@ const RoomDetailsBody = ({ room }) => {
             </svg>
             <p className="room_details_body_1_4_1_2">
               Maximum <br /> persons: {room.maxOccupancy}
-            </p>
-          </div>
-          <div className="room_details_body_1_4_2">
-            <svg
-              className="room_details_body_1_4_2_1"
-              xmlns="http://www.w3.org/2000/svg"
-              width="40"
-              height="40"
-              viewBox="0 0 40 40"
-              fill="none"
-            >
-              <g clipPath="url(#clip0_11352_8771)">
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M6 39L6 0H7H33H34V39H40V40H30V39L30 4H11.1542L22.0002 7.63921V35.8381L10.1858 39.9638C10.1248 39.9882 10.0619 39.9998 10 39.9997V40H0V39H6ZM10 38.9711L21.0002 35.1611V8.35997L10 4.66759L10 38.9711ZM33 1V39H31L31 4V3H30H10H9V4V39H7L7 1H33ZM19 19V23H20V19H19Z"
-                  fill="currentColor"
-                ></path>
-              </g>
-              <defs>
-                <clipPath id="clip0_11352_8771">
-                  <rect width="40" height="40" fill="currentColor"></rect>
-                </clipPath>
-              </defs>
-            </svg>
-            <p className="room_details_body_1_4_2_2">
-              Available: {room.totalUnits}
             </p>
           </div>
         </div>

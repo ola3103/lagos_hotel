@@ -1,17 +1,26 @@
 import { Link, useNavigate } from "react-router-dom"
 import SingleRoomPreview from "./SingleRoomPreview"
 import { GlobalHotelContext } from "../../context/HotelContext"
+import { UseAccess } from "../../context/AccessContext"
+import { useEffect } from "react"
 
 const SingleRoom = ({ room }) => {
   const { tripCartState, setTripCartState } = GlobalHotelContext()
+  const { hasBookedRoom, setHasBookedRoom } = UseAccess()
 
   const navigate = useNavigate()
 
   const handleBookTripBtn = () => {
     setTripCartState(room)
-    navigate("/your-info")
+    setHasBookedRoom(true)
     console.log(room)
   }
+
+  useEffect(() => {
+    if (hasBookedRoom) {
+      navigate("/your-info")
+    }
+  }, [hasBookedRoom, navigate])
 
   return (
     <div className="single_room_container">
@@ -21,7 +30,13 @@ const SingleRoom = ({ room }) => {
       <div className="single_room_detail">
         <div className="single_room_detail_1">
           <h1 className="single_room_detail_title">{room.name}</h1>
-          <p className="single_room_detail_price">${room.price}/night</p>
+          {room.availableUnits === 0 ? (
+            <p className="single_room_detail_full_booked">
+              This room is fully booked for your chosen dates.
+            </p>
+          ) : (
+            <p className="single_room_detail_price">${room.price}/night</p>
+          )}
         </div>
         <div className="single_room_detail_line"></div>
         <div className="single_room_detail_2_box">
@@ -93,7 +108,7 @@ const SingleRoom = ({ room }) => {
                   </defs>
                 </svg>
                 <p className="single_room_detail_2_1_2_text">
-                  Rooms Available: {room.totalUnits}
+                  Rooms Available: {room.availableUnits}
                 </p>
               </div>
             </div>
@@ -126,12 +141,14 @@ const SingleRoom = ({ room }) => {
                   ></path>
                 </svg>
               </Link>
-              <button
-                onClick={handleBookTripBtn}
-                className="single_room_detail_2_side_2_3"
-              >
-                <p> BOOK NOW</p>
-              </button>
+              {room.availableUnits === 0 ? null : (
+                <button
+                  onClick={handleBookTripBtn}
+                  className="single_room_detail_2_side_2_3"
+                >
+                  <p> BOOK NOW</p>
+                </button>
+              )}
             </div>
           </div>
         </div>

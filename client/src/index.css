@@ -1200,6 +1200,10 @@ ROOMS BODY SECTION
 .single_room_detail_price {
   font-weight: 500;
 }
+.single_room_detail_full_booked {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
 .single_room_detail_line {
   background-color: rgba(255, 255, 255, 0);
   border-block-start: 0.3rem solid rgb(0, 0, 0);

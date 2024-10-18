@@ -6,9 +6,6 @@ import RoomsHeroSection from "../components/Rooms/RoomsHeroSection"
 import RoomsHeroSectionBottom from "../components/Rooms/RoomsHeroSectionBottom"
 
 const Rooms = () => {
-  const navigate = useNavigate()
-  const location = useLocation()
-
   return (
     <section>
       <RoomsHeroSection />

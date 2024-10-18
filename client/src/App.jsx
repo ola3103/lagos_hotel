@@ -7,6 +7,10 @@ import ScrollToTop from "./hooks/ScrollToTop"
 import BookingPage from "./pages/BookingPage"
 import BookingInfoPage from "./pages/BookingInfoPage"
 import PaymentSuccessPage from "./pages/PaymentSuccessPage"
+import {
+  ProtectBookingFormInfoRoute,
+  ProtectedRoomRoute,
+} from "./hooks/ProtectedRoute"
 
 function App() {
   return (
@@ -16,9 +20,13 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/book-room" element={<BookingPage />} />
           <Route path="/the-lagos-bar" element={<LagosBar />} />
-          <Route path="/rooms" element={<Rooms />} />
+          <Route element={<ProtectedRoomRoute />}>
+            <Route path="/rooms" element={<Rooms />} />
+          </Route>
           <Route path="/room-details/:roomId" element={<RoomDetails />} />
-          <Route path="/your-info" element={<BookingInfoPage />} />
+          <Route element={<ProtectBookingFormInfoRoute />}>
+            <Route path="/your-info" element={<BookingInfoPage />} />
+          </Route>
           <Route path="/payment-successful" element={<PaymentSuccessPage />} />
         </Routes>
       </ScrollToTop>
