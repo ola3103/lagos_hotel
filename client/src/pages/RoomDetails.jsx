@@ -15,7 +15,10 @@ const RoomDetails = () => {
     const fetchRoomData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5070/api/v1/room/${roomId}`
+          `${
+            import.meta.env.VITE_API_BASE_URL_PROD ||
+            import.meta.env.VITE_API_BASE_URL_DEV
+          }/api/v1/room/${roomId}`
         )
         setSingleRoom(response.data.room)
       } catch (error) {
@@ -25,8 +28,6 @@ const RoomDetails = () => {
 
     fetchRoomData()
   }, [roomId])
-
-  console.log(singleRoom)
 
   if (!singleRoom) {
     return <p>Loading</p>

@@ -34,8 +34,6 @@ exports.createBooking = async (req, res) => {
     },
   })
 
-  console.log(availableUnit)
-
   if (!availableUnit) {
     throw new CustomError(
       "No available units for the selected room and dates",

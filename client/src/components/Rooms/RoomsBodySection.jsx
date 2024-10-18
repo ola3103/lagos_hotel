@@ -8,19 +8,6 @@ const RoomsBodySection = () => {
   const [rooms, setRooms] = useState([])
   const { hotelDateState } = GlobalHotelContext()
 
-  // const formatDate = (date) => {
-  //   const dateString = date
-  //   const currentYear = new Date().getFullYear
-  //   const parsedDate = parse(
-  //     `${dateString} ${currentYear}`,
-  //     "MMM d yyyy",
-  //     new Date()
-  //   )
-  //   return format(parsedDate, "yyyy-MM-dd")
-  // }
-
-  // console.log(hotelDateState)
-
   const convertToFullDate = (dateString, year = new Date().getFullYear()) => {
     const parsedDate = parse(`${dateString} ${year}`, "MMM d yyyy", new Date())
 
@@ -33,13 +20,17 @@ const RoomsBodySection = () => {
   const handleRoomData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5070/api/v1/room?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`
+        `${
+          import.meta.env.VITE_API_BASE_URL_PROD ||
+          import.meta.env.VITE_API_BASE_URL_DEV
+        }/api/v1/room?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`
       )
       setRooms(response.data.data)
     } catch (error) {
       console.log(error)
     }
   }
+  console.log(import.meta.env.VITE_API_BASE_URL_PROD)
 
   console.log(rooms)
 

@@ -19,7 +19,6 @@ const RoomDetailsBody = ({ room }) => {
     setTripCartState(room)
     setHasBookedRoom(true)
     navigate("/your-info")
-    console.log(room)
   }
 
   return (

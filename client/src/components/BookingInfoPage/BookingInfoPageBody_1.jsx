@@ -28,11 +28,12 @@ const BookingInfoPageBody_1 = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5070/api/v1/booking/checkout-session",
+        `${
+          import.meta.env.VITE_API_BASE_URL_PROD ||
+          import.meta.env.VITE_API_BASE_URL_DEV
+        }/api/v1/booking/checkout-session`,
         { hotelBookingInfo }
       )
-      console.log(response)
-
       if (response.status === 200 && response.data.url) {
         // Redirect to Stripe Checkout
         window.location.href = response.data.url

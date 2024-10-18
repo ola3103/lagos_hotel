@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import { GlobalHotelContext } from "../../context/HotelContext"
 
 const RoomsHeroSectionBottom = () => {
