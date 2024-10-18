@@ -22,12 +22,17 @@ app.use(
   })
 )
 
+// app.use(
+//   cors({
+//     origin:
+//       process.env.NODE_ENV === "production"
+//         ? `https://lagos-hotel.vercel.app`
+//         : `http://localhost:5070`,
+//   })
+// )
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? `https://lagos-hotel.vercel.app`
-        : `http://localhost:5070`,
+    origin: "http://localhost:5173",
   })
 )
 app.options("*", cors())
