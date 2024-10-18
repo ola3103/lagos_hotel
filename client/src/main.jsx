@@ -10,7 +10,7 @@ import { AccessProvider } from "./context/AccessContext.jsx"
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <BlockForwardNavigation />
+      {/* <BlockForwardNavigation /> */}
       <HotelProvider>
         <AccessProvider>
           <App />
