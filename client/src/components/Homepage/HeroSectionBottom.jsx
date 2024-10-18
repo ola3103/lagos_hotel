@@ -22,18 +22,13 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
   const { hotelDateState, setHotelDateState } = GlobalHotelContext()
 
   const handleHomepageBooking = () => {
-    if (
-      state[0].startDate &&
-      state[0].endDate &&
-      state[0].endDate > state[0].startDate
-    ) {
+    if (state[0].endDate > state[0].startDate) {
       setHotelDateState({
         checkInDate: format(state[0].startDate, "MMM d"),
         checkOutDate: format(state[0].endDate, "MMM d"),
       })
-      navigate("/rooms")
-      console.log("worked")
       setHasChooseDate(true)
+      console.log("worked")
     } else {
       setPopUpState(true)
       console.log("Check-out date must be later than check-in date.")
