@@ -24,6 +24,9 @@ app.use(
 
 app.options("*", cors())
 
+app.get("/", (req, res) => {
+  res.status(200).json({ status: "success", message: "homepage" })
+})
 app.use("/api/v1/room", roomRoute)
 app.use("/api/v1/booking", bookingRoute)
 app.use("/api/v1/roomUnit", roomUnitRoute)
