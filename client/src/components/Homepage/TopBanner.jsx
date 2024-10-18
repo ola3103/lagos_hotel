@@ -1,7 +1,7 @@
 const TopBanner = () => {
   return (
-    <p className="top_banner">For General Inquiries call +234 818-267-6421</p>
-  );
-};
+    <p className="top_banner">For General Inquiries call +234 818-267-6420</p>
+  )
+}
 
-export default TopBanner;
+export default TopBanner
