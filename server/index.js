@@ -32,7 +32,7 @@ app.use(
 // )
 app.use(
   cors({
-    origin: "https://lagoshotel.vercel.app",
+    origin: ["https://lagoshotel.vercel.app", "http://localhost:5173"],
   })
 )
 app.options("*", cors())

@@ -17,6 +17,8 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
     },
   ])
 
+  const [hasChoosenDate, setHasChoosenDate] = useState(false)
+
   const { hotelDateState, setHotelDateState } = GlobalHotelContext()
 
   const handleHomepageBooking = () => {
@@ -26,12 +28,21 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
         checkOutDate: format(state[0].endDate, "MMM d"),
       })
       console.log("worked")
-      navigate("/rooms")
+      setHasChoosenDate(true)
     } else {
+      navigate("/")
       setPopUpState(true)
       console.log("Check-out date must be later than check-in date.")
     }
   }
+
+  useEffect(() => {
+    if (hasChoosenDate) {
+      navigate("/rooms")
+    } else {
+      navigate("/")
+    }
+  }, [hasChoosenDate])
 
   return (
     <div className="hero_sec_bottom_main">
