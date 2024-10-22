@@ -1,27 +1,18 @@
 import { Link, useNavigate } from "react-router-dom"
 import SingleRoomPreview from "./SingleRoomPreview"
 import { GlobalHotelContext } from "../../context/HotelContext"
-import { UseAccess } from "../../context/AccessContext"
 import { useEffect } from "react"
 
 const SingleRoom = ({ room }) => {
   const { tripCartState, setTripCartState } = GlobalHotelContext()
-  const { hasBookedRoom, setHasBookedRoom } = UseAccess()
 
   const navigate = useNavigate()
 
   const handleBookTripBtn = () => {
     setTripCartState(room)
-    // setHasBookedRoom(true)
     navigate("/your-info")
     console.log(room)
   }
-
-  // useEffect(() => {
-  //   if (hasBookedRoom) {
-  //     navigate("/your-info")
-  //   }
-  // }, [hasBookedRoom, navigate])
 
   return (
     <div className="single_room_container">
