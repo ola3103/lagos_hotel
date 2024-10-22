@@ -97,11 +97,17 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
                 scroll={{ enabled: true }}
                 direction="vertical"
               />
-              <button
+              {/* <button
                 onClick={handleHomepageBooking}
                 className="book_hotel_btn general_btn_style"
               >
                 <p>BOOK HOTEL</p>
+              </button> */}
+              <button
+                onClick={handleHomepageBooking}
+                className="book_hotel_btn general_btn_style"
+              >
+                BOOK HOTEL
               </button>
             </div>
           </div>

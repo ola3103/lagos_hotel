@@ -19,7 +19,7 @@ const BookingPageBody = () => {
   const navigate = useNavigate()
 
   const { hotelDateState, setHotelDateState } = GlobalHotelContext()
-  const { hasChooseDate, setHasChooseDate } = UseAccess()
+  // const { hasChooseDate, setHasChooseDate } = UseAccess()
 
   const handleBookingRoomBtn = () => {
     const { startDate, endDate } = state[0]
