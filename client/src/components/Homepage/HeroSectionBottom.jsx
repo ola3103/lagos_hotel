@@ -6,7 +6,6 @@ import { useEffect, useState } from "react"
 import { GlobalHotelContext } from "../../context/HotelContext"
 import { useNavigate } from "react-router-dom"
 import WarningPopUp from "./WarningPopUp"
-import { UseAccess } from "../../context/AccessContext"
 
 const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
   const navigate = useNavigate()
@@ -18,32 +17,21 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
     },
   ])
 
-  const [hasChooseDate, setHasChooseDate] = useState(false)
-
-  // const { hasChooseDate, setHasChooseDate } = UseAccess()
   const { hotelDateState, setHotelDateState } = GlobalHotelContext()
 
   const handleHomepageBooking = () => {
-    // if (state[0].endDate > state[0].startDate) {
-    //   setHotelDateState({
-    //     checkInDate: format(state[0].startDate, "MMM d"),
-    //     checkOutDate: format(state[0].endDate, "MMM d"),
-    //   })
-    //   // setHasChooseDate(true)
-    //   // console.log("worked")
-    //   navigate("/rooms")
-    // } else {
-    //   setPopUpState(true)
-    //   console.log("Check-out date must be later than check-in date.")
-    // }
-    navigate("/rooms")
+    if (state[0].endDate > state[0].startDate) {
+      setHotelDateState({
+        checkInDate: format(state[0].startDate, "MMM d"),
+        checkOutDate: format(state[0].endDate, "MMM d"),
+      })
+      console.log("worked")
+      navigate("/rooms")
+    } else {
+      setPopUpState(true)
+      console.log("Check-out date must be later than check-in date.")
+    }
   }
-
-  // useEffect(() => {
-  //   if (hasChooseDate) {
-  //     navigate("/rooms")
-  //   }
-  // }, [hasChooseDate])
 
   return (
     <div className="hero_sec_bottom_main">
