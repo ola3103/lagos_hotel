@@ -24,18 +24,19 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
   const { hotelDateState, setHotelDateState } = GlobalHotelContext()
 
   const handleHomepageBooking = () => {
-    if (state[0].endDate > state[0].startDate) {
-      setHotelDateState({
-        checkInDate: format(state[0].startDate, "MMM d"),
-        checkOutDate: format(state[0].endDate, "MMM d"),
-      })
-      // setHasChooseDate(true)
-      // console.log("worked")
-      navigate("/rooms")
-    } else {
-      setPopUpState(true)
-      console.log("Check-out date must be later than check-in date.")
-    }
+    // if (state[0].endDate > state[0].startDate) {
+    //   setHotelDateState({
+    //     checkInDate: format(state[0].startDate, "MMM d"),
+    //     checkOutDate: format(state[0].endDate, "MMM d"),
+    //   })
+    //   // setHasChooseDate(true)
+    //   // console.log("worked")
+    //   navigate("/rooms")
+    // } else {
+    //   setPopUpState(true)
+    //   console.log("Check-out date must be later than check-in date.")
+    // }
+    navigate("/rooms")
   }
 
   // useEffect(() => {
@@ -97,17 +98,11 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
                 scroll={{ enabled: true }}
                 direction="vertical"
               />
-              {/* <button
-                onClick={handleHomepageBooking}
-                className="book_hotel_btn general_btn_style"
-              >
-                <p>BOOK HOTEL</p>
-              </button> */}
               <button
                 onClick={handleHomepageBooking}
                 className="book_hotel_btn general_btn_style"
               >
-                BOOK HOTEL
+                <p>BOOK HOTEL</p>
               </button>
             </div>
           </div>
