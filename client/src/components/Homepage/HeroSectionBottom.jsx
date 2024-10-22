@@ -26,7 +26,7 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
         checkOutDate: format(state[0].endDate, "MMM d"),
       })
       console.log("worked")
-      // navigate("/rooms")
+      navigate("/rooms")
     } else {
       setPopUpState(true)
       console.log("Check-out date must be later than check-in date.")
