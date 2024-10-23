@@ -1,15 +1,15 @@
 import { Link, useNavigate } from "react-router-dom"
 import SingleRoomPreview from "./SingleRoomPreview"
 import { GlobalHotelContext } from "../../context/HotelContext"
-import { useEffect } from "react"
 
-const SingleRoom = ({ room }) => {
+const SingleRoom = ({ room, setHasChoosenRoom }) => {
   const { tripCartState, setTripCartState } = GlobalHotelContext()
 
   const navigate = useNavigate()
 
   const handleBookTripBtn = () => {
     setTripCartState(room)
+    setHasChoosenRoom(true)
     navigate("/your-info")
     console.log(room)
   }

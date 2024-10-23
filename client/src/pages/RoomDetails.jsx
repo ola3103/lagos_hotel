@@ -6,7 +6,7 @@ import axios from "axios"
 import { useParams } from "react-router-dom"
 import BookingInfoPageFooter from "../components/Room-Details/RoomDetailsFooter"
 
-const RoomDetails = () => {
+const RoomDetails = ({ setHasChoosenRoom }) => {
   const [singleRoom, setSingleRoom] = useState({})
 
   const { roomId } = useParams()
@@ -20,6 +20,9 @@ const RoomDetails = () => {
             import.meta.env.VITE_API_BASE_URL_DEV
           }/api/v1/room/${roomId}`
         )
+        // const response = await axios.get(
+        //   `${import.meta.env.VITE_API_BASE_URL_DEV}/api/v1/room/${roomId}`
+        // )
         setSingleRoom(response.data.room)
       } catch (error) {
         console.log(error)
@@ -38,7 +41,10 @@ const RoomDetails = () => {
       <div className="room_details_container">
         <RoomDetailsBanner roomName={singleRoom.name} />
         <RoomDetailsPreview roomImg={singleRoom.images} />
-        <RoomDetailsBody room={singleRoom} />
+        <RoomDetailsBody
+          room={singleRoom}
+          setHasChoosenRoom={setHasChoosenRoom}
+        />
         <BookingInfoPageFooter />
       </div>
     </section>

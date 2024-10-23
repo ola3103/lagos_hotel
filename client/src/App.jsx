@@ -9,9 +9,11 @@ import BookingInfoPage from "./pages/BookingInfoPage"
 import PaymentSuccessPage from "./pages/PaymentSuccessPage"
 import { useState } from "react"
 import ProtectRoomViewRoute from "./pages/ProtectRoomViewRoute"
+import ProtectYourInfoPage from "./pages/ProtectYourInfoPage"
 
 function App() {
   const [hasChoosenDate, setHasChoosenDate] = useState(false)
+  const [hasChoosenRoom, setHasChoosenRoom] = useState(false)
 
   return (
     <>
@@ -31,10 +33,20 @@ function App() {
           <Route
             element={<ProtectRoomViewRoute hasChoosenDate={hasChoosenDate} />}
           >
-            <Route path="/rooms" element={<Rooms />} />
+            <Route
+              path="/rooms"
+              element={<Rooms setHasChoosenRoom={setHasChoosenRoom} />}
+            />
           </Route>
-          <Route path="/room-details/:roomId" element={<RoomDetails />} />
-          <Route path="/your-info" element={<BookingInfoPage />} />
+          <Route
+            path="/room-details/:roomId"
+            element={<RoomDetails setHasChoosenRoom={setHasChoosenRoom} />}
+          />
+          <Route
+            element={<ProtectYourInfoPage hasChoosenRoom={hasChoosenRoom} />}
+          >
+            <Route path="/your-info" element={<BookingInfoPage />} />
+          </Route>
           <Route path="/payment-successful" element={<PaymentSuccessPage />} />
         </Routes>
       </ScrollToTop>

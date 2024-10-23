@@ -4,7 +4,7 @@ import SingleRoom from "./SingleRoom"
 import { GlobalHotelContext } from "../../context/HotelContext"
 import { format, parse } from "date-fns"
 
-const RoomsBodySection = () => {
+const RoomsBodySection = ({ setHasChoosenRoom }) => {
   const [rooms, setRooms] = useState([])
   const { hotelDateState } = GlobalHotelContext()
 
@@ -43,7 +43,13 @@ const RoomsBodySection = () => {
   }, [])
 
   const allRooms = rooms.map((oneRoom) => {
-    return <SingleRoom key={oneRoom._id} room={oneRoom} />
+    return (
+      <SingleRoom
+        key={oneRoom._id}
+        room={oneRoom}
+        setHasChoosenRoom={setHasChoosenRoom}
+      />
+    )
   })
 
   return (

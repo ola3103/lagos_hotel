@@ -1,9 +1,8 @@
 import { GlobalHotelContext } from "../../context/HotelContext"
 import { differenceInDays } from "date-fns"
-import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
-const RoomDetailsBody = ({ room }) => {
+const RoomDetailsBody = ({ room, setHasChoosenRoom }) => {
   const { hotelDateState, setTripCartState } = GlobalHotelContext()
 
   const navigate = useNavigate()
@@ -14,6 +13,7 @@ const RoomDetailsBody = ({ room }) => {
   )
 
   const handleBookTripBtn = () => {
+    setHasChoosenRoom(true)
     setTripCartState(room)
     navigate("/your-info")
   }
