@@ -25,6 +25,11 @@ const RoomsBodySection = () => {
           import.meta.env.VITE_API_BASE_URL_DEV
         }/api/v1/room?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`
       )
+      // const response = await axios.get(
+      //   `${
+      //     import.meta.env.VITE_API_BASE_URL_DEV
+      //   }/api/v1/room?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`
+      // )
       setRooms(response.data.data)
     } catch (error) {
       console.log(error)

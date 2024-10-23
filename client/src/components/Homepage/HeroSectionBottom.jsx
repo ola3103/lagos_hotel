@@ -7,7 +7,12 @@ import { GlobalHotelContext } from "../../context/HotelContext"
 import { useNavigate } from "react-router-dom"
 import WarningPopUp from "./WarningPopUp"
 
-const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
+const HeroSectionBottom = ({
+  popUpState,
+  setPopUpState,
+  hasChoosenDate,
+  setHasChoosenDate,
+}) => {
   const navigate = useNavigate()
   const [state, setState] = useState([
     {
@@ -17,9 +22,7 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
     },
   ])
 
-  const [hasChoosenDate, setHasChoosenDate] = useState(false)
-
-  const { hotelDateState, setHotelDateState } = GlobalHotelContext()
+  const { setHotelDateState } = GlobalHotelContext()
 
   const handleHomepageBooking = () => {
     if (state[0].endDate > state[0].startDate) {
@@ -27,22 +30,15 @@ const HeroSectionBottom = ({ popUpState, setPopUpState }) => {
         checkInDate: format(state[0].startDate, "MMM d"),
         checkOutDate: format(state[0].endDate, "MMM d"),
       })
-      console.log("worked")
       setHasChoosenDate(true)
+      navigate("/rooms")
+      console.log("worked")
+      console.log(hasChoosenDate)
     } else {
-      navigate("/")
       setPopUpState(true)
       console.log("Check-out date must be later than check-in date.")
     }
   }
-
-  useEffect(() => {
-    if (hasChoosenDate) {
-      navigate("/rooms")
-    } else {
-      navigate("/")
-    }
-  }, [hasChoosenDate])
 
   return (
     <div className="hero_sec_bottom_main">

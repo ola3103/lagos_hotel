@@ -8,7 +8,7 @@ import SectionThree from "../components/Homepage/SectionThree"
 import SectionTwo from "../components/Homepage/SectionTwo"
 import TopBanner from "../components/Homepage/TopBanner"
 
-const HomePage = () => {
+const HomePage = ({ hasChoosenDate, setHasChoosenDate }) => {
   const [popUpState, setPopUpState] = useState(false)
 
   useEffect(() => {
@@ -27,6 +27,8 @@ const HomePage = () => {
         <HeroSectionBottom
           popUpState={popUpState}
           setPopUpState={setPopUpState}
+          hasChoosenDate={hasChoosenDate}
+          setHasChoosenDate={setHasChoosenDate}
         />
         <SectionOne />
         <SectionTwo />
