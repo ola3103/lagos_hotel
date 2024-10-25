@@ -109,3 +109,10 @@ exports.getCheckoutSession = async (req, res) => {
   res.status(200).json({ status: "success", url: session.url })
   // res.redirect(303, session.url)
 }
+
+exports.webhookSession = async (req, res) => {
+  const event = req.body
+
+  console.log(event)
+  res.send("test")
+}

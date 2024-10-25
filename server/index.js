@@ -10,6 +10,7 @@ const roomRoute = require("./routes/roomRoute")
 const bookingRoute = require("./routes/bookingRoute")
 const roomUnitRoute = require("./routes/roomUnitRoute")
 const { errorController } = require("./controllers/errorController")
+const bookingController = require("./controllers/bookingController")
 
 app.use(express.json())
 
@@ -40,6 +41,13 @@ app.options("*", cors())
 app.get("/", (req, res) => {
   res.status(200).json({ status: "success", message: "homepage" })
 })
+
+app.post(
+  "/webhook",
+  express.json({ type: "application/json" }),
+  bookingController.webhookSession
+)
+
 app.use("/api/v1/room", roomRoute)
 app.use("/api/v1/booking", bookingRoute)
 app.use("/api/v1/roomUnit", roomUnitRoute)
