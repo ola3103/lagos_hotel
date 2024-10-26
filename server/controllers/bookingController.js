@@ -92,6 +92,9 @@ exports.getCheckoutSession = async (req, res) => {
         quantity: hotelBookingInfo.numberOfNights,
       },
     ],
+    metadata: {
+      hotelBookingInfo,
+    },
     payment_method_types: ["card"],
     mode: "payment",
     success_url: "http://localhost:5173/payment-successful",
@@ -110,9 +113,82 @@ exports.getCheckoutSession = async (req, res) => {
   // res.redirect(303, session.url)
 }
 
-exports.webhookSession = async (req, res) => {
-  const event = req.body
+const createBooking = async (bookingInfo) => {
+  const {
+    roomId,
+    checkInDate,
+    checkOutDate,
+    firstName,
+    lastName,
+    email,
+    phoneNumber,
+    specialRequest,
+    numberOfNights,
+  } = bookingInfo
 
-  console.log(event)
-  res.send("test")
+  const availableUnit = await RoomUnit.findOne({
+    room: roomId,
+    bookings: {
+      $not: {
+        $elemMatch: {
+          $or: [
+            {
+              checkInDate: { $lt: new Date(checkOutDate) },
+              checkOutDate: { $gt: new Date(checkInDate) },
+            },
+          ],
+        },
+      },
+    },
+  })
+
+  if (!availableUnit) {
+    throw new CustomError(
+      "No available units for the selected room and dates",
+      400
+    )
+  }
+
+  const newBooking = await Booking.create({
+    room: roomId,
+    checkInDate,
+    checkOutDate,
+    firstName,
+    lastName,
+    email,
+    phoneNumber,
+    specialRequest,
+    numberOfNights,
+    paid: true,
+  })
+
+  availableUnit.bookings.push({
+    checkInDate: new Date(checkInDate),
+    checkOutDate: new Date(checkOutDate),
+  })
+
+  await availableUnit.save()
+}
+
+exports.webhookSession = async (req, res) => {
+  const signature = req.headers["stripe-signature"]
+
+  let event
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET
+    )
+  } catch (error) {
+    res.status(400).send(`Webhook Error: ${error.message}`)
+  }
+
+  if (event.type === "checkout.session.completed") {
+    const checkoutSessionCompleted = event.data.object
+    createBooking(checkoutSessionCompleted.metadata.hotelBookingInfo)
+  }
+
+  res.status(200).json({ received: true })
 }
