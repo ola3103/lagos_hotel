@@ -14,14 +14,14 @@ const bookingController = require("./controllers/bookingController")
 
 app.use(express.json())
 
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
-)
+// app.use(
+//   cors({
+//     origin: "*",
+//     methods: ["GET", "POST", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//     credentials: true,
+//   })
+// )
 
 // app.use(
 //   cors({
@@ -36,17 +36,13 @@ app.use(
     origin: ["https://lagoshotel.vercel.app", "http://localhost:5173"],
   })
 )
-app.options("*", cors())
+// app.options("*", cors())
 
 app.get("/", (req, res) => {
   res.status(200).json({ status: "success", message: "homepage" })
 })
 
-app.post(
-  "/webhook",
-  express.raw({ type: "application/json" }),
-  bookingController.webhookSession
-)
+app.post("/webhook", bookingController.webhookSession)
 
 app.use("/api/v1/room", roomRoute)
 app.use("/api/v1/booking", bookingRoute)
