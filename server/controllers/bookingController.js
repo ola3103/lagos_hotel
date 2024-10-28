@@ -105,20 +105,11 @@ exports.getCheckoutSession = async (req, res) => {
     },
     payment_method_types: ["card"],
     mode: "payment",
-    success_url: "http://localhost:5173/payment-successful",
-    cancel_url: "http://localhost:5173",
+    success_url: "https://lagoshotel.vercel.app/payment-successful",
+    cancel_url: "https://lagoshotel.vercel.app",
   })
-
-  sendEmail({
-    to: hotelBookingInfo.emailAddress,
-    html: `<p>Testing sending email</p>`,
-    subject: "Test email",
-  })
-
-  console.log(session)
 
   res.status(200).json({ status: "success", url: session.url })
-  // res.redirect(303, session.url)
 }
 
 const createBooking = async (bookingInfo) => {
@@ -173,6 +164,15 @@ const createBooking = async (bookingInfo) => {
   availableUnit.bookings.push({
     checkInDate: new Date(checkInDate),
     checkOutDate: new Date(checkOutDate),
+  })
+
+  await sendEmail({
+    to: email,
+    html: `<p>Hello ${firstName}</p>
+          <p>Your booking confirmation code is ${newBooking._id}. Please present this code to the receptionist upon arrival at the hotel to confirm your booking.</p>
+          <br/>
+          <p>Thank you for choosing lagos hotel</p>`,
+    subject: "Booking Code",
   })
 
   await availableUnit.save()
