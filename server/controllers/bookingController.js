@@ -194,8 +194,8 @@ exports.webhookSession = async (req, res) => {
   }
 
   if (event.type === "checkout.session.completed") {
-    const checkoutSessionCompleted = event.data.metadata
-    createBooking(checkoutSessionCompleted)
+    const checkoutSessionCompleted = event.data.object
+    createBooking(checkoutSessionCompleted.metadata)
   }
 
   res.status(200).json({ received: true })
