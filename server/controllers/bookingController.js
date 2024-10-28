@@ -201,7 +201,9 @@ exports.webhookSession = async (req, res) => {
       console.log("Booking created successfully.")
     } catch (error) {
       console.error("Error in createBooking:", error.message)
-      return res.status(500).json({ error: "Booking creation failed" })
+      return res
+        .status(500)
+        .json({ error: "Booking creation failed", msg: error })
     }
   }
 
