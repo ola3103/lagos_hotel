@@ -30,7 +30,6 @@ const bookingSchema = mongoose.Schema(
     },
     specialRequest: {
       type: String,
-      required: true,
       trim: true,
     },
     checkInDate: {
