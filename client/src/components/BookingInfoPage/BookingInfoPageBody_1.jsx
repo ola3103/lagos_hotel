@@ -2,6 +2,7 @@ import { format, differenceInDays } from "date-fns"
 import axios from "axios"
 import { useForm } from "react-hook-form"
 import { GlobalHotelContext } from "../../context/HotelContext"
+import { format, parse } from "date-fns"
 
 const BookingInfoPageBody_1 = () => {
   const { hotelDateState, tripCartState } = GlobalHotelContext()
@@ -17,9 +18,19 @@ const BookingInfoPageBody_1 = () => {
     hotelDateState.checkInDate
   )
 
+  const convertToFullDate = (dateString, year = new Date().getFullYear()) => {
+    const parsedDate = parse(`${dateString} ${year}`, "MMM d yyyy", new Date())
+
+    return format(parsedDate, "yyyy-MM-dd")
+  }
+
+  const checkInDate = convertToFullDate(hotelDateState.checkInDate)
+  const checkOutDate = convertToFullDate(hotelDateState.checkOutDate)
+
   const handleBookingForm = async (data) => {
     const hotelBookingInfo = {
-      ...hotelDateState,
+      checkInDate,
+      checkOutDate,
       ...tripCartState,
       ...data,
       numberOfNights,
