@@ -44,7 +44,7 @@ app.get("/", (req, res) => {
 
 app.post(
   "/webhook",
-  express.json({ type: "application/json" }),
+  express.raw({ type: "application/json" }),
   bookingController.webhookSession
 )
 
