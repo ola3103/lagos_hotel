@@ -1,8 +1,7 @@
-import { format, differenceInDays } from "date-fns"
+import { format, differenceInDays, parse } from "date-fns"
 import axios from "axios"
 import { useForm } from "react-hook-form"
 import { GlobalHotelContext } from "../../context/HotelContext"
-import { format, parse } from "date-fns"
 
 const BookingInfoPageBody_1 = () => {
   const { hotelDateState, tripCartState } = GlobalHotelContext()
