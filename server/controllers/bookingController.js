@@ -98,7 +98,7 @@ exports.getCheckoutSession = async (req, res) => {
       checkOutDate: hotelBookingInfo.checkOutDate,
       firstName: hotelBookingInfo.firstName,
       lastName: hotelBookingInfo.lastName,
-      email: hotelBookingInfo.email,
+      email: hotelBookingInfo.emailAddress,
       phoneNumber: hotelBookingInfo.phoneNumber,
       specialRequest: hotelBookingInfo.specialRequest,
       numberOfNights: hotelBookingInfo.numberOfNights,
@@ -117,7 +117,7 @@ exports.getCheckoutSession = async (req, res) => {
 
   console.log(session)
 
-  res.status(200).json({ status: "success", url: session.url })
+  res.status(200).json({ status: "success", url: session.url, data: session })
   // res.redirect(303, session.url)
 }
 
