@@ -195,7 +195,14 @@ exports.webhookSession = async (req, res) => {
 
   if (event.type === "checkout.session.completed") {
     const checkoutSessionCompleted = event.data.object
-    createBooking(checkoutSessionCompleted.metadata)
+
+    try {
+      await createBooking(checkoutSessionCompleted.metadata)
+      console.log("Booking created successfully.")
+    } catch (error) {
+      console.error("Error in createBooking:", error.message)
+      return res.status(500).json({ error: "Booking creation failed" })
+    }
   }
 
   res.status(200).json({ received: true })
