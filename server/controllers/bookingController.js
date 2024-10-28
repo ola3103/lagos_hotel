@@ -93,7 +93,7 @@ exports.getCheckoutSession = async (req, res) => {
       },
     ],
     metadata: {
-      hotelBookingInfo,
+      ...hotelBookingInfo,
     },
     payment_method_types: ["card"],
     mode: "payment",
@@ -187,7 +187,7 @@ exports.webhookSession = async (req, res) => {
 
   if (event.type === "checkout.session.completed") {
     const checkoutSessionCompleted = event.data.object
-    createBooking(checkoutSessionCompleted.metadata.hotelBookingInfo)
+    createBooking(checkoutSessionCompleted.metadata)
   }
 
   res.status(200).json({ received: true })

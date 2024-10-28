@@ -9,7 +9,7 @@ import BlockForwardNavigation from "./hooks/BlockForwardNavigation.jsx"
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      {/* <BlockForwardNavigation /> */}
+      <BlockForwardNavigation />
       <HotelProvider>
         <App />
       </HotelProvider>
