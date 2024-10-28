@@ -44,12 +44,12 @@ const BookingInfoPageBody_1 = () => {
         }/api/v1/booking/checkout-session`,
         { hotelBookingInfo }
       )
-      // if (response.status === 200 && response.data.url) {
-      //   // Redirect to Stripe Checkout
-      //   window.location.href = response.data.url
-      // } else {
-      //   console.error("Failed to create Stripe checkout session")
-      // }
+      if (response.status === 200 && response.data.url) {
+        // Redirect to Stripe Checkout
+        window.location.href = response.data.url
+      } else {
+        console.error("Failed to create Stripe checkout session")
+      }
     } catch (error) {
       console.log(error)
     }
