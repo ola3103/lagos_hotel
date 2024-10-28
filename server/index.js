@@ -12,6 +12,12 @@ const roomUnitRoute = require("./routes/roomUnitRoute")
 const { errorController } = require("./controllers/errorController")
 const bookingController = require("./controllers/bookingController")
 
+app.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  bookingController.webhookSession
+)
+
 app.use(express.json())
 
 // app.use(
@@ -41,8 +47,6 @@ app.use(
 app.get("/", (req, res) => {
   res.status(200).json({ status: "success", message: "homepage" })
 })
-
-app.post("/webhook", bookingController.webhookSession)
 
 app.use("/api/v1/room", roomRoute)
 app.use("/api/v1/booking", bookingRoute)
