@@ -110,7 +110,7 @@ exports.getCheckoutSession = async (req, res) => {
     },
     payment_method_types: ["card"],
     mode: "payment",
-    success_url: `https://lagoshotel.vercel.app/payment-successful?token=${token}`,
+    success_url: `https://lagoshotel.vercel.app/payment-successful?token=${token.sessionToken}`,
     cancel_url: "https://lagoshotel.vercel.app",
   })
 
