@@ -80,7 +80,7 @@ exports.getCheckoutSession = async (req, res) => {
   console.log(hotelBookingInfo)
 
   const genToken = crypto.randomBytes(20).toString("hex")
-  const token = await Token.create({ token: genToken })
+  const token = await Token.create({ sessionToken: genToken })
 
   const session = await stripe.checkout.sessions.create({
     line_items: [
