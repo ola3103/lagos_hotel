@@ -53,9 +53,14 @@ const bookingSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    token: {
+      type: String,
+      required: true,
+      unique: true,
+    },
   },
   { timestamps: true }
 )
 
-const Room = mongoose.model("Booking", bookingSchema)
-module.exports = Room
+const Booking = mongoose.model("Booking", bookingSchema)
+module.exports = Booking

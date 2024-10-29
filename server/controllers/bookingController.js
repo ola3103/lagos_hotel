@@ -1,6 +1,8 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 const Booking = require("../models/bookingModel")
 const RoomUnit = require("../models/roomUnitModel")
+const Token = require("../models/tokenModel")
+const crypto = require("crypto")
 
 const sendEmail = require("../utils/sendEmail")
 const { CustomError } = require("./errorController")
@@ -77,6 +79,9 @@ exports.getCheckoutSession = async (req, res) => {
   const { hotelBookingInfo } = req.body
   console.log(hotelBookingInfo)
 
+  const genToken = crypto.randomBytes(20).toString("hex")
+  const token = await Token.create({ token: genToken })
+
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -105,7 +110,7 @@ exports.getCheckoutSession = async (req, res) => {
     },
     payment_method_types: ["card"],
     mode: "payment",
-    success_url: "https://lagoshotel.vercel.app/payment-successful",
+    success_url: `https://lagoshotel.vercel.app/payment-successful?token=${token}`,
     cancel_url: "https://lagoshotel.vercel.app",
   })
 
@@ -123,6 +128,7 @@ const createBooking = async (bookingInfo) => {
     phoneNumber,
     specialRequest,
     numberOfNights,
+    token,
   } = bookingInfo
 
   const availableUnit = await RoomUnit.findOne({
@@ -171,7 +177,7 @@ const createBooking = async (bookingInfo) => {
     html: `<p>Hello ${firstName}</p>
           <p>Your booking confirmation code is ${newBooking._id}. Please present this code to the receptionist upon arrival at the hotel to confirm your booking.</p>
           <br/>
-          <p>Thank you for choosing lagos hotel</p>`,
+          <p>Thank you for choosing lagos hotel!</p>`,
     subject: "Booking Code",
   })
 
@@ -197,15 +203,17 @@ exports.webhookSession = async (req, res) => {
     const checkoutSessionCompleted = event.data.object
 
     try {
-      await createBooking(checkoutSessionCompleted.metadata)
+      const token = crypto.randomBytes(16).toString("hex")
+      await createBooking(...checkoutSessionCompleted.metadata)
       console.log("Booking created successfully.")
+      res.status(200).json({ status: "success" })
     } catch (error) {
       console.error("Error in createBooking:", error.message)
       return res
         .status(500)
         .json({ error: "Booking creation failed", msg: error })
     }
+  } else {
+    res.status(400).end()
   }
-
-  res.status(200).json({ received: true })
 }
