@@ -48,7 +48,6 @@ const BookingInfoPageBody_1 = () => {
       } else {
         console.error("Failed to create Stripe checkout session")
       }
-      console.log(response)
     } catch (error) {
       console.log(error)
     }
