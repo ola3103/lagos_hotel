@@ -1,7 +1,33 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate, useSearchParams, Navigate } from "react-router-dom"
+import axios from "axios"
+import { useState, useEffect } from "react"
 
 const PaymentSuccessPage = () => {
-  return (
+  const [isTokenValid, setIsTokenValid] = useState(false)
+
+  const navigate = useNavigate()
+
+  const [searchParams] = useSearchParams()
+  const token = searchParams.get("token")
+
+  useEffect(() => {
+    const checkIsTokenValid = async () => {
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL_PROD}/api/v1/token`,
+          { token }
+        )
+        if (response.status === 200) {
+          setIsTokenValid(true)
+        }
+      } catch (error) {
+        navigate("/")
+      }
+    }
+    checkIsTokenValid()
+  }, [])
+
+  return isTokenValid ? (
     <section className="payment_success_page">
       <div className="payment_success_page_container">
         <img
@@ -19,7 +45,7 @@ const PaymentSuccessPage = () => {
         </Link>
       </div>
     </section>
-  )
+  ) : null
 }
 
 export default PaymentSuccessPage

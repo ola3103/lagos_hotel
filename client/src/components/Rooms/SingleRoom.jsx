@@ -3,7 +3,7 @@ import SingleRoomPreview from "./SingleRoomPreview"
 import { GlobalHotelContext } from "../../context/HotelContext"
 
 const SingleRoom = ({ room, setHasChoosenRoom }) => {
-  const { tripCartState, setTripCartState } = GlobalHotelContext()
+  const { setTripCartState } = GlobalHotelContext()
 
   const navigate = useNavigate()
 
@@ -11,7 +11,6 @@ const SingleRoom = ({ room, setHasChoosenRoom }) => {
     setTripCartState(room)
     setHasChoosenRoom(true)
     navigate("/your-info")
-    console.log(room)
   }
 
   return (

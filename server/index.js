@@ -9,6 +9,7 @@ const cors = require("cors")
 const roomRoute = require("./routes/roomRoute")
 const bookingRoute = require("./routes/bookingRoute")
 const roomUnitRoute = require("./routes/roomUnitRoute")
+const tokenRoute = require("./routes/tokenRoute")
 const { errorController } = require("./controllers/errorController")
 const bookingController = require("./controllers/bookingController")
 
@@ -20,29 +21,11 @@ app.post(
 
 app.use(express.json())
 
-// app.use(
-//   cors({
-//     origin: "*",
-//     methods: ["GET", "POST", "OPTIONS"],
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//     credentials: true,
-//   })
-// )
-
-// app.use(
-//   cors({
-//     origin:
-//       process.env.NODE_ENV === "production"
-//         ? `https://lagoshotel.vercel.app`
-//         : `http://localhost:5173`,
-//   })
-// )
 app.use(
   cors({
-    origin: ["https://lagoshotel.vercel.app", "http://localhost:5173"],
+    origin: ["https://lagoshotel.vercel.app"],
   })
 )
-// app.options("*", cors())
 
 app.get("/", (req, res) => {
   res.status(200).json({ status: "success", message: "homepage" })
@@ -51,6 +34,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/room", roomRoute)
 app.use("/api/v1/booking", bookingRoute)
 app.use("/api/v1/roomUnit", roomUnitRoute)
+app.use("/api/v1/token", tokenRoute)
 app.use(errorController)
 app.all("*", (req, res) => {
   res

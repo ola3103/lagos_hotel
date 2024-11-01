@@ -3,9 +3,11 @@ import axios from "axios"
 import SingleRoom from "./SingleRoom"
 import { GlobalHotelContext } from "../../context/HotelContext"
 import { format, parse } from "date-fns"
+import Loader from "../../pages/Loader"
 
 const RoomsBodySection = ({ setHasChoosenRoom }) => {
   const [rooms, setRooms] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const { hotelDateState } = GlobalHotelContext()
 
   const convertToFullDate = (dateString, year = new Date().getFullYear()) => {
@@ -19,28 +21,27 @@ const RoomsBodySection = ({ setHasChoosenRoom }) => {
 
   const handleRoomData = async () => {
     try {
+      setIsLoading(true)
       const response = await axios.get(
         `${
-          import.meta.env.VITE_API_BASE_URL_PROD ||
-          import.meta.env.VITE_API_BASE_URL_DEV
+          import.meta.env.VITE_API_BASE_URL_PROD
         }/api/v1/room?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`
       )
-      // const response = await axios.get(
-      //   `${
-      //     import.meta.env.VITE_API_BASE_URL_DEV
-      //   }/api/v1/room?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`
-      // )
+
       setRooms(response.data.data)
     } catch (error) {
       console.log(error)
     }
+    setIsLoading(false)
   }
-
-  console.log(rooms)
 
   useEffect(() => {
     handleRoomData()
   }, [])
+
+  if (isLoading) {
+    return <Loader />
+  }
 
   const allRooms = rooms.map((oneRoom) => {
     return (

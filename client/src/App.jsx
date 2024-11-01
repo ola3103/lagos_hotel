@@ -10,6 +10,8 @@ import PaymentSuccessPage from "./pages/PaymentSuccessPage"
 import { useState } from "react"
 import ProtectRoomViewRoute from "./pages/ProtectRoomViewRoute"
 import ProtectYourInfoPage from "./pages/ProtectYourInfoPage"
+import Loader from "./pages/Loader"
+import PageNotFound from "./pages/PageNotFound"
 
 function App() {
   const [hasChoosenDate, setHasChoosenDate] = useState(false)
@@ -48,6 +50,7 @@ function App() {
             <Route path="/your-info" element={<BookingInfoPage />} />
           </Route>
           <Route path="/payment-successful" element={<PaymentSuccessPage />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </ScrollToTop>
     </>

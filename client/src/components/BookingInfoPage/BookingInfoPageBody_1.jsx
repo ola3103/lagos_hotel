@@ -34,13 +34,11 @@ const BookingInfoPageBody_1 = () => {
       ...data,
       numberOfNights,
     }
-    console.log(hotelBookingInfo)
 
     try {
       const response = await axios.post(
         `${
-          import.meta.env.VITE_API_BASE_URL_PROD ||
-          import.meta.env.VITE_API_BASE_URL_DEV
+          import.meta.env.VITE_API_BASE_URL_PROD
         }/api/v1/booking/checkout-session`,
         { hotelBookingInfo }
       )

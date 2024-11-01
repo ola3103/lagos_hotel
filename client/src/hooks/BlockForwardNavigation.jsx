@@ -21,10 +21,9 @@ const BlockForwardNavigation = () => {
   }, [navigate])
 
   useEffect(() => {
-    // Ensure there is no forward history
     const clearForwardHistory = () => {
       window.history.pushState(null, "", location.pathname)
-      window.history.forward() // Attempt to move forward (which will do nothing) and clear forward entries
+      window.history.forward()
     }
 
     clearForwardHistory()

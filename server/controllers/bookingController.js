@@ -114,7 +114,10 @@ exports.getCheckoutSession = async (req, res) => {
     cancel_url: "https://lagoshotel.vercel.app",
   })
 
-  res.status(200).json({ status: "success", url: session.url })
+  res.status(200).json({
+    status: "success",
+    url: session.url,
+  })
 }
 
 const createBooking = async (bookingInfo) => {
@@ -128,7 +131,6 @@ const createBooking = async (bookingInfo) => {
     phoneNumber,
     specialRequest,
     numberOfNights,
-    token,
   } = bookingInfo
 
   const availableUnit = await RoomUnit.findOne({
@@ -203,9 +205,7 @@ exports.webhookSession = async (req, res) => {
     const checkoutSessionCompleted = event.data.object
 
     try {
-      const token = crypto.randomBytes(16).toString("hex")
-      await createBooking(...checkoutSessionCompleted.metadata)
-      console.log("Booking created successfully.")
+      await createBooking(checkoutSessionCompleted.metadata)
       res.status(200).json({ status: "success" })
     } catch (error) {
       console.error("Error in createBooking:", error.message)

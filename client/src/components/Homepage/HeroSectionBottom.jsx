@@ -10,7 +10,6 @@ import WarningPopUp from "./WarningPopUp"
 const HeroSectionBottom = ({
   popUpState,
   setPopUpState,
-  hasChoosenDate,
   setHasChoosenDate,
 }) => {
   const navigate = useNavigate()
@@ -32,11 +31,8 @@ const HeroSectionBottom = ({
       })
       setHasChoosenDate(true)
       navigate("/rooms")
-      console.log("worked")
-      console.log(hasChoosenDate)
     } else {
       setPopUpState(true)
-      console.log("Check-out date must be later than check-in date.")
     }
   }
 

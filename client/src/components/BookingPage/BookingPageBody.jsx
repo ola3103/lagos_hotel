@@ -2,8 +2,8 @@ import "react-date-range/dist/styles.css"
 import "react-date-range/dist/theme/default.css"
 import { DateRangePicker } from "react-date-range"
 import { addDays, format, isSameDay } from "date-fns"
-import { useState, useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { GlobalHotelContext } from "../../context/HotelContext"
 
 const BookingPageBody = () => {
@@ -17,7 +17,7 @@ const BookingPageBody = () => {
 
   const navigate = useNavigate()
 
-  const { hotelDateState, setHotelDateState } = GlobalHotelContext()
+  const { setHotelDateState } = GlobalHotelContext()
 
   const handleBookingRoomBtn = () => {
     const { startDate, endDate } = state[0]
