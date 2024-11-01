@@ -1787,9 +1787,14 @@ BOOK ROOM PAGE
 .booking_page {
   background-color: var(--bg-color--);
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+}
+@media (max-width: 576px) {
+  .booking_page {
+    height: 100%;
+  }
 }
 /* ------------------------------
 BOOK ROOM BANNER
