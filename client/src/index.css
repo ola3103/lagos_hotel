@@ -2228,7 +2228,7 @@ PAYMENT SUCCESS PAGE
   padding-top: 10rem;
 }
 .payment_success_page_img {
-  max-width: 19rem;
+  max-width: 15rem;
   margin-bottom: 1rem;
 }
 .payment_success_page_title {
@@ -2239,6 +2239,15 @@ PAYMENT SUCCESS PAGE
 }
 .payment_success_page_link {
   text-decoration: underline;
+}
+@media (max-width: 576px) {
+  .payment_success_page_img {
+    max-width: 10rem;
+    margin-bottom: 1rem;
+  }
+  .payment_success_page {
+    height: 100%;
+  }
 }
 /* -------------------------------
 PAGE NOT FOUND
