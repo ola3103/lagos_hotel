@@ -6,7 +6,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { GlobalHotelContext } from "../../context/HotelContext"
 
-const BookingPageBody = () => {
+const BookingPageBody = ({ setHasChoosenDate }) => {
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -26,6 +26,7 @@ const BookingPageBody = () => {
         checkInDate: format(startDate, "MMM d"),
         checkOutDate: format(endDate, "MMM d"),
       })
+      setHasChoosenDate(true)
       navigate("/rooms")
     } else {
       console.log("Check-out date must be later than check-in date.")

@@ -23,14 +23,12 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={
-              <HomePage
-                hasChoosenDate={hasChoosenDate}
-                setHasChoosenDate={setHasChoosenDate}
-              />
-            }
+            element={<HomePage setHasChoosenDate={setHasChoosenDate} />}
           />
-          <Route path="/book-room" element={<BookingPage />} />
+          <Route
+            path="/book-room"
+            element={<BookingPage setHasChoosenDate={setHasChoosenDate} />}
+          />
           <Route path="/the-lagos-bar" element={<LagosBar />} />
           <Route
             element={<ProtectRoomViewRoute hasChoosenDate={hasChoosenDate} />}
