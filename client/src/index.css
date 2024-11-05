@@ -1787,7 +1787,7 @@ BOOK ROOM PAGE
 .booking_page {
   background-color: var(--bg-color--);
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -1824,6 +1824,7 @@ BOOK ROOM BODY
   justify-content: center;
   padding: 2rem;
   overflow: hidden;
+  margin-bottom: 4rem;
 }
 .booking_page_body_1 {
   margin-bottom: 0.75rem;
